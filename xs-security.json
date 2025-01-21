@@ -1,0 +1,12 @@
+{
+  "xsappname": "fs-agr-td-tabelas",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.TD_Tabelas",
+      "description": "Trading Desk - Tabelas"
+    }
+  ],
+  "attributes": [],
+  "role-templates": []
+}

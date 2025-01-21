@@ -1,0 +1,67 @@
+_schema-version: 3.3.0
+ID: fs-agr-td-tabelas
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+modules:
+  - name: fs-agr-td-tabelas-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      buildpack: nodejs_buildpack
+      readiness-health-check-type: http
+      readiness-health-check-http-endpoint: /health
+    build-parameters:
+      builder: npm
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: fs-agr-td-tabelas-db
+      - name: fs-agr-td-tabelas-connectivity
+      - name: fs-agr-td-tabelas-auth
+      - name: fs-agr-td-tabelas-destination
+
+  - name: fs-agr-td-tabelas-db-deployer
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: fs-agr-td-tabelas-db
+
+resources:
+  - name: fs-agr-td-tabelas-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      config:
+        schema: CT_TDTABELAS
+      service: hana
+      service-plan: hdi-shared
+  - name: fs-agr-td-tabelas-connectivity
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite
+  - name: fs-agr-td-tabelas-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: fs-agr-td-tabelas-${org}-${space}
+        tenant-mode: dedicated
+  - name: fs-agr-td-tabelas-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
