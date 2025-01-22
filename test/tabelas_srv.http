@@ -1,0 +1,14 @@
+# In the following requests the variable baseUrl is used.
+# Its value is set here.
+@baseUrl = http://localhost:4004
+
+
+### ------------------------------------------------------------------------
+# Get Service Document
+GET {{baseUrl}}/admin
+
+
+### ------------------------------------------------------------------------
+# Get Service Metadata Document
+GET {{baseUrl}}/admin/$metadata
+

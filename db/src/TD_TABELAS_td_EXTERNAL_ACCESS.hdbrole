@@ -1,0 +1,27 @@
+{
+  "role": {
+    "name": "TD_TABELAS_td_EXTERNAL_ACCESS",
+    "object_privileges": [
+      {
+        "name": "BR_AGR_FS_TD_TABELAS_DB_PROSPECCAOCAB",
+        "type": "TABLE",
+        "privileges": ["SELECT"]
+      },
+      {
+        "name": "BR_AGR_FS_TD_TABELAS_DB_PROSPECCAOITEM",
+        "type": "TABLE",
+        "privileges": ["SELECT"]
+      },
+      {
+        "name": "BR_AGR_FS_TD_TABELAS_DB_PROSPECCAOINDEX",
+        "type": "TABLE",
+        "privileges": ["SELECT"]
+      },
+      {
+        "name": "BR_AGR_FS_TD_TABELAS_DB_PROGRAMACAO",
+        "type": "TABLE",
+        "privileges": ["SELECT"]
+      }
+    ]
+  }
+}

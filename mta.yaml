@@ -25,10 +25,10 @@ modules:
         properties:
           srv-url: ${default-url}
     requires:
-      - name: fs-agr-td-tabelas-db
       - name: fs-agr-td-tabelas-connectivity
-      - name: fs-agr-td-tabelas-auth
       - name: fs-agr-td-tabelas-destination
+      - name: fs-agr-td-tabelas-db
+      - name: fs-agr-td-tabelas-auth
 
   - name: fs-agr-td-tabelas-db-deployer
     type: hdb
@@ -39,18 +39,25 @@ modules:
       - name: fs-agr-td-tabelas-db
 
 resources:
-  - name: fs-agr-td-tabelas-db
-    type: com.sap.xs.hdi-container
-    parameters:
-      config:
-        schema: CT_TDTABELAS
-      service: hana
-      service-plan: hdi-shared
   - name: fs-agr-td-tabelas-connectivity
     type: org.cloudfoundry.managed-service
     parameters:
       service: connectivity
       service-plan: lite
+  - name: fs-agr-td-tabelas-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+  - name: fs-agr-td-tabelas-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      config:
+        schema: TD_TABELAS
+      service: hana
+      service-keys:
+        - name: td_tabelas-db-key
+      service-plan: hdi-shared
   - name: fs-agr-td-tabelas-auth
     type: org.cloudfoundry.managed-service
     parameters:
@@ -60,8 +67,3 @@ resources:
       config:
         xsappname: fs-agr-td-tabelas-${org}-${space}
         tenant-mode: dedicated
-  - name: fs-agr-td-tabelas-destination
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: destination
-      service-plan: lite

@@ -6,11 +6,12 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@cap-js/hana": "^1",
     "@sap/cds": "^8",
     "@sap/cds-common-content": "^2.1.0",
     "@sap/cds-hana": "^2.0.0",
-    "express": "^4",
-    "@sap/xssec": "^4"
+    "@sap/xssec": "^4",
+    "express": "^4"
   },
   "devDependencies": {
     "@cap-js/cds-types": "^0.8.0",
@@ -25,6 +26,9 @@
       "connectivity": true,
       "auth": "xsuaa",
       "destinations": true
+    },
+    "sql": {
+      "native_hana_associations": false
     }
   }
 }
